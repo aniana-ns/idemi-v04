@@ -1,7 +1,7 @@
 
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, CheckCircle, BookOpen, FileText, Calendar, Briefcase, ChevronRight, Award, Users, Activity, Zap } from 'lucide-react';
+import { ArrowRight, CheckCircle, BookOpen, FileText, Calendar, Briefcase, ChevronRight, Award, Users, Activity, Zap, GraduationCap, Shield, Newspaper } from 'lucide-react';
 import ServiceCard from '../components/ServiceCard';
 import ImageSlider from '../components/ImageSlider';
 import NewsTicker from '../components/NewsTicker';
@@ -57,28 +57,21 @@ const INITIAL_NEWS: NewsItem[] = [
     id: 'n1', 
     date: 'New', 
     title: 'BARC RT2- 97th Batch Announcement', 
-    summary: '', 
+    summary: 'The 97th batch for BARC Radiography Testing Level 2 has been announced. Admissions open for limited seats.', 
     link: '/downloads/notifications' 
   },
   { 
     id: 'n2', 
     date: 'Oct 2024', 
-    title: 'AICTE 2025 - Third Merit List - Tool & Die Making', 
-    summary: '', 
+    title: 'AICTE 2025 - Third Merit List Published', 
+    summary: 'Third merit list for Tool & Die Making and other AICTE courses is now available online.', 
     link: `/view-document?url=https://idemi.org/assets/downloads/EC%20Blr%20Newspaper%20Ad%20A5%20Size.pdf&title=AICTE 2025 - Third Merit List` 
   },
   { 
     id: 'n3', 
     date: 'Oct 2024', 
-    title: 'AICTE 2025 - Third Merit List - 3D Animation & Graphics', 
-    summary: '', 
-    link: `/view-document?url=https://idemi.org/assets/downloads/EC%20Blr%20Newspaper%20Ad%20A5%20Size.pdf&title=AICTE 2025 - Third Merit List` 
-  },
-  { 
-    id: 'n4', 
-    date: 'Oct 2024', 
-    title: 'AICTE 2025 - Third Merit List - Robotics & Mechatronics', 
-    summary: '', 
+    title: 'New Infrastructure: 5-Axis Hermle CNC', 
+    summary: 'IDEMI adds high-precision 5-axis capabilities to its Mumbai tool room facility.', 
     link: `/view-document?url=https://idemi.org/assets/downloads/EC%20Blr%20Newspaper%20Ad%20A5%20Size.pdf&title=AICTE 2025 - Third Merit List` 
   }
 ];
@@ -178,9 +171,27 @@ const SERVICES_PREVIEW: ServiceItem[] = [
 ];
 
 const TRAINING_PREVIEW = [
-  { title: "Diploma in Tool & Die Making", type: "AICTE Approved", duration: "4 Years", description: "Comprehensive course covering design and manufacturing of tools, dies, moulds, and jigs." },
-  { title: "Post Graduate Diploma in Industrial Automation", type: "Long Term", duration: "1 Year", description: "Advanced training in PLC, SCADA, DCS, and Industrial Robotics." },
-  { title: "Radiography Testing (RT Level-2)", type: "Specialized", duration: "BARC Certified", description: "Joint training program with BARC for radiological safety and testing." }
+  { 
+    title: "Diploma in Tool & Die Making", 
+    type: "AICTE Approved", 
+    duration: "4 Years", 
+    description: "Comprehensive course covering design and manufacturing of tools, dies, moulds, and jigs.",
+    icon: <GraduationCap size={32} />
+  },
+  { 
+    title: "Post Graduate Diploma (Automation)", 
+    type: "Long Term", 
+    duration: "1 Year", 
+    description: "Advanced training in PLC, SCADA, DCS, and Industrial Robotics for Engineering Graduates.",
+    icon: <Award size={32} />
+  },
+  { 
+    title: "Radiography Testing (RT Level-2)", 
+    type: "Specialized", 
+    duration: "BARC Certified", 
+    description: "Joint training program with BARC for radiological safety and testing in industrial applications.",
+    icon: <Shield size={32} />
+  }
 ];
 
 const QUICK_LINKS = [
@@ -350,28 +361,43 @@ const Home: React.FC = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {TRAINING_PREVIEW.map((course, index) => (
-                <div key={index} className={`bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-lg hover:shadow-2xl border border-gray-100 dark:border-gray-700 reveal-on-scroll stagger-${(index % 3) + 1} transition-all duration-300 group hover:-translate-y-2`}>
-                    <div className="flex justify-between items-start mb-6">
-                        <div className="bg-blue-50 dark:bg-blue-900/20 p-3 rounded-xl text-primary dark:text-blue-400 group-hover:bg-primary group-hover:text-white transition-colors duration-300 shadow-sm">
-                            <BookOpen size={28} />
-                        </div>
-                        <div className="text-[10px] font-bold px-3 py-1 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 uppercase tracking-wide border border-gray-200 dark:border-gray-600 shadow-sm">
-                            {course.type}
-                        </div>
-                    </div>
-                    
-                    <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3 group-hover:text-primary dark:group-hover:text-blue-400 transition-colors">
-                        {course.title}
-                    </h3>
-                    <p className="text-sm text-secondary dark:text-amber-500 font-bold mb-4 flex items-center gap-2">
-                        <Calendar size={14} /> {course.duration}
-                    </p>
-                    <p className="text-gray-600 dark:text-gray-300 mb-8 line-clamp-3 text-sm leading-relaxed">{course.description}</p>
-                    
-                    <Link to="/training" className="inline-flex items-center text-primary dark:text-blue-400 font-bold text-sm hover:text-secondary dark:hover:text-amber-400 transition-all gap-1 group-hover:gap-2">
-                        View Course Details <ArrowRight size={16} />
+              <div key={index} className={`group relative flex flex-col h-full bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg hover:shadow-2xl border border-gray-200 dark:border-gray-700 transition-all duration-300 hover:-translate-y-2 overflow-hidden reveal-on-scroll stagger-${index + 1}`}>
+                <div className="flex items-center gap-4 mb-6 relative z-10">
+                  <div className="p-3 bg-gray-50 dark:bg-gray-700 rounded-full shadow-md group-hover:scale-110 transition-transform text-primary dark:text-blue-400">
+                    {course.icon}
+                  </div>
+                  <h3 className="text-xl font-bold text-gray-900 dark:text-white group-hover:text-primary dark:group-hover:text-blue-400 transition-colors leading-tight">
+                    {course.title}
+                  </h3>
+                </div>
+                
+                <p className="text-gray-600 dark:text-gray-300 text-sm mb-6 flex-grow relative z-10">
+                  {course.description}
+                </p>
+
+                <ul className="space-y-3 mb-8 bg-gray-50 dark:bg-gray-700/30 p-4 rounded-xl relative z-10 border border-gray-100 dark:border-gray-600 shadow-inner">
+                  <li className="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300">
+                    <ChevronRight size={16} className="text-secondary dark:text-amber-500 shrink-0" />
+                    <span className="font-bold">Type:</span> {course.type}
+                  </li>
+                  <li className="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300">
+                    <ChevronRight size={16} className="text-secondary dark:text-amber-500 shrink-0" />
+                    <span className="font-bold">Duration:</span> {course.duration}
+                  </li>
+                </ul>
+
+                <div className="mt-auto relative z-10">
+                    <Link 
+                        to="/training" 
+                        className="w-full py-3 px-4 bg-white dark:bg-gray-700/50 text-primary dark:text-blue-400 text-center rounded-xl font-bold text-sm transition-all duration-300 group-hover:bg-primary group-hover:text-white dark:group-hover:bg-blue-600 dark:group-hover:text-white flex items-center justify-center gap-2 border border-gray-200 dark:border-gray-700 group-hover:border-transparent shadow-md hover:shadow-lg"
+                    >
+                        View Course Details <ArrowRight size={16} className="ml-2 group-hover:translate-x-1 transition-transform" />
                     </Link>
                 </div>
+
+                {/* Subtle border gradient on hover */}
+                <div className="absolute inset-0 border-2 border-transparent group-hover:border-primary/10 dark:group-hover:border-blue-400/20 rounded-2xl pointer-events-none transition-all duration-300"></div>
+              </div>
             ))}
           </div>
           
@@ -386,7 +412,7 @@ const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* Quick Links / Updates Section */}
+      {/* Latest Opportunities Section */}
       <section className="py-24 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16 reveal-on-scroll">
@@ -403,7 +429,9 @@ const Home: React.FC = () => {
                   <div className="p-3 bg-white dark:bg-gray-700 rounded-full shadow-md group-hover:scale-110 transition-transform text-primary dark:text-blue-400">
                     {item.icon}
                   </div>
-                  <h3 className="text-xl font-bold text-gray-900 dark:text-white group-hover:text-primary dark:group-hover:text-blue-400 transition-colors">{item.title}</h3>
+                  <h3 className="text-xl font-bold text-gray-900 dark:text-white group-hover:text-primary dark:group-hover:text-blue-400 transition-colors leading-tight">
+                    {item.title}
+                  </h3>
                 </div>
                 
                 <p className="text-gray-600 dark:text-gray-300 text-sm mb-6 flex-grow relative z-10">
@@ -439,40 +467,51 @@ const Home: React.FC = () => {
       {/* Testimonials Carousel */}
       <TestimonialCarousel testimonials={TESTIMONIALS} />
 
-      {/* News Section */}
-      <section className="py-24 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800">
+      {/* Press Releases Section - REDESIGNED WITH ORANGE ACCENT */}
+      <section className="py-24 bg-gray-50 dark:bg-gray-950 border-t border-gray-200 dark:border-gray-800">
         <div className="container mx-auto px-4">
-          <div className="flex justify-between items-end mb-12 reveal-on-scroll">
-            <div>
-              <h2 className="text-3xl font-bold text-gray-900 dark:text-white drop-shadow-sm">Press Releases</h2>
-              <p className="text-gray-600 dark:text-gray-400 mt-2">Recent announcements and events.</p>
+          <div className="flex flex-col md:flex-row justify-between items-center md:items-end mb-16 reveal-on-scroll">
+            <div className="text-center md:text-left mb-6 md:mb-0">
+              <span className="text-secondary dark:text-amber-500 font-bold uppercase tracking-widest text-xs mb-2 block">Latest News</span>
+              <h2 className="text-3xl md:text-4xl font-black text-gray-900 dark:text-white drop-shadow-sm">Press Releases</h2>
+              <p className="text-gray-600 dark:text-gray-400 mt-2">Recent announcements, updates, and major milestones.</p>
             </div>
-            <Link to="/downloads/notifications" className="hidden md:flex items-center gap-1 text-primary dark:text-blue-400 font-bold hover:text-secondary dark:hover:text-amber-500 transition-colors uppercase text-sm tracking-wider">
-                View Archive <ArrowRight size={16} />
+            <Link to="/downloads/notifications" className="inline-flex items-center gap-2 text-secondary dark:text-amber-500 font-bold hover:text-primary dark:hover:text-blue-400 transition-colors uppercase text-sm tracking-wider group">
+                View Archive <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
             </Link>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {INITIAL_NEWS.slice(0, 3).map((item, index) => (
-                <article key={item.id} className={`bg-gray-50 dark:bg-gray-800 p-8 rounded-2xl shadow-lg hover:shadow-2xl border border-gray-100 dark:border-gray-700 flex flex-col h-full reveal-on-scroll stagger-${(index % 3) + 1} transition-all duration-300 hover:-translate-y-1 cursor-pointer group`}>
-                {item.date && <div className="text-secondary dark:text-amber-500 text-xs font-bold uppercase tracking-widest mb-3">{item.date}</div>}
-                <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-3 group-hover:text-primary dark:group-hover:text-blue-400 transition-colors line-clamp-2">
-                    {item.link ? (
-                        item.link.startsWith('/') ? (
-                            <Link to={item.link}>{item.title}</Link>
-                        ) : (
-                            <a href={item.link} target="_blank" rel="noopener noreferrer">{item.title}</a>
-                        )
-                    ) : (
-                        item.title
-                    )}
-                </h3>
-                {item.summary && <p className="text-gray-600 dark:text-gray-300 text-sm line-clamp-3 mb-6 flex-grow">{item.summary}</p>}
-                <div className="mt-auto pt-6 border-t border-gray-200 dark:border-gray-700">
-                    <Link to={item.link?.startsWith('/') ? item.link : '#'} className="text-xs text-gray-500 dark:text-gray-400 font-bold uppercase tracking-wider group-hover:text-primary dark:group-hover:text-blue-400 transition-colors flex items-center gap-1">
-                        Read More <ArrowRight size={12} className="opacity-0 group-hover:opacity-100 transition-opacity -ml-2 group-hover:ml-0" />
+                <article key={item.id} className={`group relative flex flex-col h-full bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg hover:shadow-2xl border border-gray-200 dark:border-gray-700 transition-all duration-300 hover:-translate-y-2 overflow-hidden reveal-on-scroll stagger-${index + 1}`}>
+                
+                <div className="flex items-center gap-4 mb-6 relative z-10">
+                  <div className="p-3 bg-gray-50 dark:bg-gray-700 rounded-full shadow-md group-hover:scale-110 transition-transform text-secondary dark:text-amber-500">
+                    <Newspaper size={32} />
+                  </div>
+                  <div>
+                    <span className="text-[10px] font-black uppercase tracking-widest text-gray-500 dark:text-gray-400 mb-1 block">{item.date}</span>
+                    <h3 className="text-xl font-bold text-gray-900 dark:text-white group-hover:text-secondary dark:group-hover:text-amber-500 transition-colors leading-tight line-clamp-2">
+                        {item.title}
+                    </h3>
+                  </div>
+                </div>
+                
+                <p className="text-gray-600 dark:text-gray-300 text-sm mb-8 flex-grow relative z-10 leading-relaxed">
+                    {item.summary}
+                </p>
+
+                <div className="mt-auto relative z-10">
+                    <Link 
+                        to={item.link || '#'} 
+                        className="w-full py-3 px-4 bg-gray-50 dark:bg-gray-700/50 text-secondary dark:text-amber-500 text-center rounded-xl font-bold text-sm transition-all duration-300 group-hover:bg-secondary group-hover:text-white dark:group-hover:bg-amber-600 dark:group-hover:text-white flex items-center justify-center gap-2 border border-gray-200 dark:border-gray-700 group-hover:border-transparent shadow-md hover:shadow-lg"
+                    >
+                        Read Full Story <ArrowRight size={16} className="ml-2 group-hover:translate-x-1 transition-transform" />
                     </Link>
                 </div>
+
+                {/* Subtle border gradient on hover */}
+                <div className="absolute inset-0 border-2 border-transparent group-hover:border-secondary/10 dark:group-hover:border-amber-400/20 rounded-2xl pointer-events-none transition-all duration-300"></div>
                 </article>
             ))}
           </div>
@@ -483,5 +522,3 @@ const Home: React.FC = () => {
 };
 
 export default Home;
-
-
