@@ -1,7 +1,8 @@
 
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Calendar, ArrowLeft, Clock, CheckCircle, AlertCircle, Download, FileText, Eye, X, Phone, IndianRupee, MapPin } from 'lucide-react';
+// Added BookOpen to imports
+import { Calendar, ArrowLeft, Clock, CheckCircle, AlertCircle, Download, FileText, Eye, X, Phone, IndianRupee, MapPin, ExternalLink, BookOpen } from 'lucide-react';
 import SEO from '../components/SEO';
 import ServiceSidebar from '../components/ServiceSidebar';
 import { useScrollAnimation } from '../lib/useScrollAnimation';
@@ -96,6 +97,10 @@ const AICTESchedule: React.FC = () => {
     setViewingId(prev => prev === id ? null : id);
   };
 
+  const getViewerUrl = (url: string) => {
+      return `https://docs.google.com/gview?url=${encodeURIComponent(url)}&embedded=true`;
+  };
+
   return (
     <div className="bg-gray-50 dark:bg-gray-950 min-h-screen transition-colors duration-200">
       <SEO
@@ -122,98 +127,115 @@ const AICTESchedule: React.FC = () => {
              <ServiceSidebar />
           </aside>
 
-          <div className="lg:w-3/4 space-y-12 reveal-on-scroll">
+          <div className="lg:w-3/4 space-y-12">
              
              {/* 1. Notifications & Spot Admission */}
-             <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700">
-                <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+             <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 reveal-on-scroll">
+                <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-6 flex items-center gap-2">
                     <AlertCircle className="text-red-500" /> Latest Notifications
                 </h2>
                 <div className="space-y-4">
                     {NOTIFICATIONS.map((note) => (
-                        <div key={note.id} className="bg-red-50 dark:bg-red-900/10 border border-red-100 dark:border-red-900/30 rounded-lg overflow-hidden">
+                        <div key={note.id} className={`border rounded-xl overflow-hidden transition-all duration-300 ${viewingId === note.id ? 'border-red-200 bg-red-50/30 dark:border-red-900/50 dark:bg-red-900/10 shadow-md' : 'border-gray-100 dark:border-gray-700 hover:border-red-100 dark:hover:border-red-900/30'}`}>
                             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 gap-4">
-                                <div>
-                                    <h3 className="font-bold text-gray-800 dark:text-white">{note.title}</h3>
-                                    <span className="text-xs font-bold text-red-600 dark:text-red-400 bg-white dark:bg-gray-800 px-2 py-0.5 rounded mt-1 inline-block border border-red-100 dark:border-red-900">
-                                        {note.date}
-                                    </span>
+                                <div className="flex items-start gap-3">
+                                    <div className="p-2 bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 rounded-lg">
+                                        <FileText size={20} />
+                                    </div>
+                                    <div>
+                                        <h3 className="font-bold text-gray-800 dark:text-white text-sm md:text-base leading-snug">{note.title}</h3>
+                                        <span className="text-[10px] font-black uppercase tracking-widest text-red-600 dark:text-red-400 mt-1 inline-block">
+                                            {note.date}
+                                        </span>
+                                    </div>
                                 </div>
-                                <div className="flex items-center gap-2 shrink-0">
+                                <div className="flex items-center gap-2 w-full sm:w-auto">
                                     <button 
                                         onClick={() => toggleView(note.id)}
-                                        className="flex items-center gap-1 px-3 py-1.5 bg-white dark:bg-gray-800 border border-red-200 dark:border-red-800 rounded text-sm font-bold text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition"
+                                        className={`flex-1 sm:flex-none flex items-center justify-center gap-1 px-4 py-2 rounded-lg text-xs font-bold transition border ${viewingId === note.id ? 'bg-red-100 border-red-200 text-red-700 dark:bg-red-900/40 dark:border-red-800 dark:text-red-300' : 'bg-white dark:bg-gray-700 border-gray-200 dark:border-gray-600 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600'}`}
                                     >
                                         {viewingId === note.id ? <><X size={14} /> Close</> : <><Eye size={14} /> View</>}
                                     </button>
                                     <a 
                                         href={note.link} 
                                         download 
-                                        className="flex items-center gap-1 px-3 py-1.5 bg-red-600 text-white rounded text-sm font-bold hover:bg-red-700 transition"
+                                        className="flex-1 sm:flex-none flex items-center justify-center gap-1 px-4 py-2 bg-red-600 text-white rounded-lg text-xs font-bold hover:bg-red-700 transition shadow-sm"
                                     >
-                                        <Download size={14} />
+                                        <Download size={14} /> <span className="hidden xs:inline">Download</span>
                                     </a>
                                 </div>
                             </div>
                             {viewingId === note.id && (
-                                <div className="p-4 border-t border-red-200 dark:border-red-900/30 bg-white dark:bg-gray-800">
-                                    <iframe src={note.link} className="w-full h-[500px] border-0 rounded" title={note.title} />
+                                <div className="p-4 border-t border-red-100 dark:border-red-900/30 bg-white dark:bg-gray-900 animate-slide-up">
+                                    <div className="w-full h-[500px] border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden shadow-inner">
+                                        <iframe src={getViewerUrl(note.link)} className="w-full h-full" title={note.title} />
+                                    </div>
                                 </div>
                             )}
                         </div>
                     ))}
                     
-                    <div className="p-4 bg-blue-50 dark:bg-blue-900/10 rounded-lg border border-blue-100 dark:border-blue-900 flex flex-col sm:flex-row justify-between items-center gap-4">
-                        <div>
-                            <h3 className="font-bold text-gray-900 dark:text-white mb-1">Enquiry for AICTE Diploma Courses</h3>
-                            <p className="text-sm text-gray-600 dark:text-gray-300">Enquiry cum Registration Form is now available.</p>
+                    <div className="p-6 bg-blue-50 dark:bg-blue-900/20 rounded-xl border border-blue-100 dark:border-blue-900 flex flex-col sm:flex-row justify-between items-center gap-6">
+                        <div className="flex items-center gap-4">
+                            <div className="p-3 bg-white dark:bg-gray-800 rounded-xl shadow-sm text-primary dark:text-blue-400">
+                                <BookOpen size={28} />
+                            </div>
+                            <div>
+                                <h3 className="font-bold text-gray-900 dark:text-white text-base">Course Enquiry 2025-26</h3>
+                                <p className="text-sm text-gray-600 dark:text-gray-300">Registration for all Diploma courses is currently open.</p>
+                            </div>
                         </div>
-                        <Link to="/student-registration?course=AICTE%20Diploma" className="inline-block bg-primary text-white px-6 py-2 rounded-lg font-bold text-sm hover:bg-blue-800 transition whitespace-nowrap shadow-md">
-                            Enquire / Register Now
+                        <Link to="/student-registration?course=AICTE%20Diploma" className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-primary text-white px-8 py-3 rounded-xl font-bold hover:bg-blue-800 transition shadow-lg hover:shadow-xl hover:-translate-y-0.5 active:translate-y-0">
+                            Apply Online <ArrowLeft size={18} className="rotate-180" />
                         </Link>
                     </div>
                 </div>
              </div>
 
              {/* 2. Merit Lists */}
-             <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700">
+             <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 reveal-on-scroll">
                 <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-6 flex items-center gap-2">
-                    <FileText className="text-secondary" /> Merit Lists - 2025
+                    <FileText className="text-secondary" /> Merit Lists - Academic Year 2025
                 </h2>
                 <div className="space-y-8">
                     {MERIT_LISTS.map((list, idx) => (
-                        <div key={idx} className="border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden">
-                            <div className="bg-gray-50 dark:bg-gray-700/50 px-4 py-3 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
-                                <h3 className="font-bold text-gray-800 dark:text-gray-200">{list.round}</h3>
-                                <span className={`text-xs px-2 py-1 rounded font-bold uppercase ${list.status === 'Published' ? 'bg-green-100 text-green-800' : 'bg-gray-200 text-gray-600'}`}>
+                        <div key={idx} className="border border-gray-200 dark:border-gray-700 rounded-xl overflow-hidden shadow-sm">
+                            <div className="bg-gray-100/80 dark:bg-gray-700/50 px-5 py-3 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
+                                <h3 className="font-bold text-gray-800 dark:text-gray-200 text-sm uppercase tracking-wide">{list.round}</h3>
+                                <span className={`text-[10px] px-2 py-0.5 rounded-full font-black uppercase tracking-widest ${list.status === 'Published' ? 'bg-green-100 text-green-700' : 'bg-gray-200 text-gray-500'}`}>
                                     {list.status}
                                 </span>
                             </div>
                             <div className="divide-y divide-gray-100 dark:divide-gray-700">
                                 {list.items.map((item) => (
-                                    <div key={item.id} className={`group ${viewingId === item.id ? 'bg-blue-50 dark:bg-gray-800' : 'hover:bg-gray-50 dark:hover:bg-gray-700/30'} transition`}>
-                                        <div className="flex flex-col sm:flex-row sm:items-center justify-between p-4 gap-3">
-                                            <span className="text-sm text-gray-700 dark:text-gray-300 font-medium">{item.course}</span>
-                                            <div className="flex items-center gap-3 shrink-0">
+                                    <div key={item.id} className={`transition-all duration-300 ${viewingId === item.id ? 'bg-blue-50 dark:bg-gray-800/80' : 'hover:bg-gray-50 dark:hover:bg-gray-700/30'}`}>
+                                        <div className="flex flex-col sm:flex-row sm:items-center justify-between p-4 gap-4">
+                                            <div className="flex items-center gap-3">
+                                                <div className="w-8 h-8 rounded-full bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 flex items-center justify-center text-secondary shrink-0">
+                                                    <FileText size={16} />
+                                                </div>
+                                                <span className="text-sm text-gray-700 dark:text-gray-300 font-semibold">{item.course}</span>
+                                            </div>
+                                            <div className="flex items-center gap-3 w-full sm:w-auto">
                                                 <button 
                                                     onClick={() => toggleView(item.id)}
-                                                    className="flex items-center gap-1 text-sm font-semibold text-gray-500 hover:text-primary dark:text-gray-400 dark:hover:text-blue-400 transition"
+                                                    className={`flex-1 sm:flex-none flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition border ${viewingId === item.id ? 'bg-red-50 border-red-200 text-red-700 dark:bg-red-900/40 dark:border-red-800 dark:text-red-300' : 'bg-white dark:bg-gray-700 border-gray-200 dark:border-gray-600 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600'}`}
                                                 >
-                                                    {viewingId === item.id ? <><X size={16} /> Close</> : <><Eye size={16} /> View</>}
+                                                    {viewingId === item.id ? <><X size={14} /> Close</> : <><Eye size={14} /> View</>}
                                                 </button>
                                                 <a 
                                                     href={item.link} 
                                                     download 
-                                                    className="flex items-center gap-1 text-sm font-semibold text-primary dark:text-blue-400 hover:underline"
+                                                    className="flex-1 sm:flex-none flex items-center justify-center gap-1.5 px-3 py-1.5 bg-primary text-white rounded-lg text-xs font-bold hover:bg-blue-800 transition"
                                                 >
-                                                    <Download size={16} /> Download
+                                                    <Download size={14} />
                                                 </a>
                                             </div>
                                         </div>
                                         {viewingId === item.id && (
-                                            <div className="px-4 pb-4 animate-fade-in">
-                                                <div className="w-full h-[500px] border border-gray-200 dark:border-gray-600 rounded bg-white overflow-hidden shadow-inner">
-                                                    <iframe src={item.link} className="w-full h-full" title={item.course} />
+                                            <div className="px-4 pb-4 animate-slide-up">
+                                                <div className="w-full h-[500px] border border-gray-200 dark:border-gray-700 rounded-lg bg-white overflow-hidden shadow-inner">
+                                                    <iframe src={getViewerUrl(item.link)} className="w-full h-full" title={item.course} />
                                                 </div>
                                             </div>
                                         )}
@@ -225,148 +247,139 @@ const AICTESchedule: React.FC = () => {
                 </div>
              </div>
 
-             {/* 3. Important Dates - Responsive */}
-             <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700">
+             {/* 3. Important Dates */}
+             <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 reveal-on-scroll">
                 <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-6 flex items-center gap-2">
                     <Calendar className="text-primary" /> Important Dates (Tentative)
                 </h2>
                 
-                {/* Desktop Table */}
-                <div className="hidden md:block overflow-x-auto rounded-lg border border-gray-200 dark:border-gray-700">
+                <div className="overflow-hidden rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm">
                     <table className="w-full text-left border-collapse">
-                        <thead className="bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200 uppercase text-xs tracking-wider">
+                        <thead className="bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200 uppercase text-[10px] font-black tracking-widest">
                             <tr>
-                                <th className="p-4 border-b dark:border-gray-600">Event Description</th>
-                                <th className="p-4 border-b dark:border-gray-600 font-bold text-right w-40">Date</th>
+                                <th className="p-4 border-b border-gray-200 dark:border-gray-600">Event Description</th>
+                                <th className="p-4 border-b border-gray-200 dark:border-gray-600 text-right w-32 md:w-40">Date</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-gray-100 dark:divide-gray-700 text-sm">
                             {IMPORTANT_DATES.map((item, idx) => (
-                                <tr key={idx} className="hover:bg-gray-50 dark:hover:bg-gray-800/50 transition">
-                                    <td className="p-4 font-medium text-gray-900 dark:text-white">{item.event}</td>
-                                    <td className="p-4 text-gray-600 dark:text-gray-300 font-mono text-right whitespace-nowrap">{item.date}</td>
+                                <tr key={idx} className="hover:bg-gray-50 dark:hover:bg-gray-800/30 transition group">
+                                    <td className="p-4 font-medium text-gray-700 dark:text-gray-300 group-hover:text-primary dark:group-hover:text-blue-400">{item.event}</td>
+                                    <td className="p-4 text-gray-600 dark:text-gray-400 font-mono text-right whitespace-nowrap">
+                                        <span className="bg-gray-100 dark:bg-gray-900 px-2 py-1 rounded text-xs font-bold">{item.date}</span>
+                                    </td>
                                 </tr>
                             ))}
                         </tbody>
                     </table>
                 </div>
-
-                {/* Mobile Cards */}
-                <div className="md:hidden space-y-4">
-                    {IMPORTANT_DATES.map((item, idx) => (
-                        <div key={idx} className="bg-gray-50 dark:bg-gray-700/30 p-4 rounded-lg border border-gray-100 dark:border-gray-600">
-                            <div className="flex justify-between items-start gap-4">
-                                <h3 className="font-medium text-gray-900 dark:text-white text-sm">{item.event}</h3>
-                                <span className="shrink-0 bg-white dark:bg-gray-800 px-2 py-1 rounded border border-gray-200 dark:border-gray-700 text-xs font-mono font-bold text-primary dark:text-blue-400">
-                                    {item.date}
-                                </span>
-                            </div>
-                        </div>
-                    ))}
-                </div>
              </div>
 
              {/* 4. Courses & Fees */}
-             <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700">
-                <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-6">Courses & Fees</h2>
-                <div className="grid md:grid-cols-3 gap-6">
+             <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 reveal-on-scroll">
+                <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-8 border-l-4 border-secondary pl-4">Approved Courses & Tuition Fees</h2>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     {COURSES.map((course, idx) => (
-                        <div key={idx} className="bg-gradient-to-br from-blue-50 to-white dark:from-gray-700 dark:to-gray-800 p-6 rounded-xl border border-blue-100 dark:border-gray-600 shadow-sm text-center flex flex-col justify-between">
-                            <h3 className="font-bold text-gray-900 dark:text-white text-sm mb-4">{course.name}</h3>
+                        <div key={idx} className="bg-gradient-to-br from-blue-50 to-white dark:from-slate-800 dark:to-slate-900 p-6 rounded-2xl border border-blue-100 dark:border-slate-700 shadow-sm text-center flex flex-col justify-between group hover:shadow-md transition-all duration-300 border-b-4 border-b-primary">
+                            <h3 className="font-bold text-gray-800 dark:text-white text-xs uppercase tracking-wider mb-6 group-hover:text-primary dark:group-hover:text-blue-400 transition-colors">{course.name}</h3>
                             <div>
-                                <div className="text-2xl font-bold text-primary dark:text-blue-400 flex items-center justify-center gap-1">
-                                    <IndianRupee size={20} /> {course.fee}
+                                <div className="text-3xl font-black text-primary dark:text-blue-400 flex items-center justify-center gap-1 mb-1">
+                                    <IndianRupee size={24} /> {course.fee}
                                 </div>
-                                <span className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">Per Semester</span>
+                                <span className="text-[10px] text-gray-500 dark:text-gray-400 font-bold uppercase tracking-widest">Per Semester</span>
                             </div>
                         </div>
                     ))}
                 </div>
-                <div className="mt-6 p-4 bg-gray-50 dark:bg-gray-700/30 rounded border border-gray-100 dark:border-gray-700 text-xs text-gray-600 dark:text-gray-300">
-                    <p><strong>Note:</strong> Reservation in seats to SC/ST/OBC/PH/EWS are applicable as per rules, subject to production of authentic Certificates. Tuition Fee of the SC/ST candidates will be reimbursed after the successful completion of the Academic Year, however other fees as applicable will be charged.</p>
+                <div className="mt-8 p-5 bg-amber-50 dark:bg-amber-900/10 rounded-xl border border-amber-100 dark:border-amber-800 text-xs text-gray-700 dark:text-gray-300 leading-relaxed shadow-inner">
+                    <p className="flex items-start gap-3">
+                        <AlertCircle size={16} className="text-amber-600 shrink-0" />
+                        <span><strong>Fee Note:</strong> Reservation in seats for SC/ST/OBC/PH/EWS are applicable as per Central Govt rules. Tuition Fee for SC/ST candidates is reimbursed after successful completion of Academic Year as per scholarship guidelines. However, administrative and other miscellaneous fees remain applicable as per institute policy.</span>
+                    </p>
                 </div>
              </div>
 
-             {/* 5. Process & Info */}
-             <div className="grid md:grid-cols-2 gap-8">
-                 <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700">
-                     <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4">Mode of Selection</h3>
+             {/* 5. Documents */}
+             <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 reveal-on-scroll">
+                <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-6 flex items-center gap-2">
+                    <FileText className="text-primary" /> Admission Documents & Downloads
+                </h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {GENERAL_DOCUMENTS.map((doc) => (
+                        <div key={doc.id} className={`rounded-xl border transition-all duration-300 ${viewingId === doc.id ? 'bg-gray-50 dark:bg-gray-900 border-primary/30 shadow-md' : 'bg-white dark:bg-gray-800 border-gray-100 dark:border-gray-700 hover:border-primary/20 hover:shadow-sm'}`}>
+                            <div className="p-4 flex items-center justify-between gap-4">
+                                <div className="flex items-center gap-3">
+                                    <div className="p-2 bg-blue-50 dark:bg-blue-900/30 text-primary dark:text-blue-400 rounded-lg">
+                                        <FileText size={18} />
+                                    </div>
+                                    <h4 className="font-bold text-gray-800 dark:text-gray-200 text-xs md:text-sm leading-snug">{doc.title}</h4>
+                                </div>
+                                <div className="flex items-center gap-2 shrink-0">
+                                    <button 
+                                        onClick={() => toggleView(doc.id)} 
+                                        className={`p-2 rounded-lg transition ${viewingId === doc.id ? 'text-red-500 bg-red-50 dark:bg-red-900/20' : 'text-gray-400 hover:text-primary dark:hover:text-blue-400 hover:bg-gray-50 dark:hover:bg-gray-700'}`}
+                                        aria-label="View Document"
+                                    >
+                                        {viewingId === doc.id ? <X size={18} /> : <Eye size={18} />}
+                                    </button>
+                                    <a 
+                                        href={doc.link} 
+                                        download 
+                                        className="p-2 bg-primary text-white rounded-lg hover:bg-blue-800 transition shadow-sm"
+                                        aria-label="Download Document"
+                                    >
+                                        <Download size={18} />
+                                    </a>
+                                </div>
+                            </div>
+                            {viewingId === doc.id && (
+                                <div className="px-4 pb-4 animate-fade-in">
+                                    <div className="w-full h-[400px] bg-white border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden shadow-inner">
+                                        <iframe src={getViewerUrl(doc.link)} className="w-full h-full" title={doc.title} />
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                    ))}
+                </div>
+             </div>
+
+             {/* 6. Process & Info */}
+             <div className="grid md:grid-cols-2 gap-8 reveal-on-scroll">
+                 <div className="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 hover:shadow-md transition-shadow">
+                     <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4 border-b border-gray-100 dark:border-gray-700 pb-3">Mode of Selection</h3>
                      <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
-                        Selection will be based on <strong>Merit</strong>. The list of successful candidates of First Merit list in the order of merit, will be declared on the IDEMI website and displayed at IDEMI Notice Board on a scheduled date as mentioned. The candidate, who meets the eligibility is based on the upcoming notification/guidelines of AICTE/MSBTE.
+                        Selection for AICTE approved courses is strictly based on <strong>Merit</strong> computed from valid qualifying marks. IDEMI follows a transparent counseling process. The final merit list is displayed on the notice board and institute website. Seats are allotted during counseling rounds based on rank and availability.
                      </p>
                  </div>
-                 <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700">
-                     <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4">How to Apply</h3>
-                     <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed mb-3">
-                        Candidate willing to register for any of the courses mentioned above will have to register his / her candidature through the Offline/On-line Registration process through the link available on the website www.idemi.org.
-                     </p>
-                     <ul className="text-sm text-gray-600 dark:text-gray-300 list-disc pl-5 space-y-1">
-                         <li>Registration Fee: <strong>₹ 200/-</strong> (Non-refundable).</li>
-                         <li>Candidates are given the choice to register for multiple courses (additional payment required).</li>
-                         <li>Candidates will be applied for the courses after successful submission of online /offline Registration.</li>
-                     </ul>
-                 </div>
-             </div>
-
-             {/* 6. Documents & Contact */}
-             <div className="grid md:grid-cols-2 gap-8">
-                {/* Documents */}
-                <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700">
-                    <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4">AICTE Approved Documents</h3>
-                    <div className="space-y-4">
-                        {GENERAL_DOCUMENTS.map((doc) => (
-                            <div key={doc.id} className={`group ${viewingId === doc.id ? 'bg-gray-50 dark:bg-gray-700/50 rounded-lg p-2' : ''} transition`}>
-                                <div className="flex justify-between items-center text-sm pb-1">
-                                    <span className="text-gray-700 dark:text-gray-300">{doc.title}</span>
-                                    <div className="flex items-center gap-2">
-                                        <button onClick={() => toggleView(doc.id)} className="text-gray-500 hover:text-primary dark:hover:text-blue-400 transition" title="View">
-                                            {viewingId === doc.id ? <X size={16} className="text-red-500"/> : <Eye size={16}/>}
-                                        </button>
-                                        <a href={doc.link} target="_blank" rel="noopener noreferrer" className="text-primary hover:text-blue-700 dark:text-blue-400">
-                                            <Download size={16} />
-                                        </a>
-                                    </div>
-                                </div>
-                                {viewingId === doc.id && (
-                                    <div className="mt-2 animate-fade-in">
-                                        <div className="w-full h-[400px] bg-white border border-gray-200 dark:border-gray-600 rounded overflow-hidden shadow-inner">
-                                            <iframe src={doc.link} className="w-full h-full" title={doc.title} />
-                                        </div>
-                                    </div>
-                                )}
-                                {viewingId !== doc.id && <div className="border-b border-gray-100 dark:border-gray-700"></div>}
-                            </div>
-                        ))}
-                    </div>
-                </div>
-
-                {/* Contact */}
-                <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700">
-                    <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-6 flex items-center gap-2">
-                        <Phone size={20} className="text-secondary" /> Contact Details
-                    </h3>
-                    <div className="space-y-6">
+                 <div className="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 hover:shadow-md transition-shadow">
+                     <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4 border-b border-gray-100 dark:border-gray-700 pb-3">Admission Support</h3>
+                     <div className="space-y-4">
                         {CONTACTS.map((contact, idx) => (
-                            <div key={idx} className="flex flex-col p-3 bg-gray-50 dark:bg-gray-700/30 rounded-lg">
-                                <span className="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-1">{contact.role}</span>
-                                <div className="flex justify-between items-center">
-                                    <span className="font-bold text-gray-800 dark:text-white">{contact.name}</span>
-                                    <a href={`tel:${contact.phone}`} className="text-primary dark:text-blue-400 font-mono text-sm font-bold hover:underline">{contact.phone}</a>
+                            <div key={idx} className="flex justify-between items-center group">
+                                <div>
+                                    <p className="font-bold text-gray-800 dark:text-white text-sm group-hover:text-primary dark:group-hover:text-blue-400 transition-colors">{contact.name}</p>
+                                    <p className="text-[10px] text-gray-500 uppercase font-bold tracking-wider">{contact.role}</p>
                                 </div>
+                                <a href={`tel:${contact.phone}`} className="flex items-center gap-1.5 px-3 py-1.5 bg-gray-50 dark:bg-gray-700 rounded-lg text-xs font-bold text-primary dark:text-blue-400 hover:bg-primary hover:text-white dark:hover:bg-blue-600 transition-all border border-gray-200 dark:border-gray-600">
+                                    <Phone size={12} /> {contact.phone}
+                                </a>
                             </div>
                         ))}
-                    </div>
-                </div>
+                     </div>
+                 </div>
              </div>
 
              {/* 7. General Conditions */}
-             <div className="bg-amber-50 dark:bg-amber-900/20 p-6 rounded-xl border border-amber-100 dark:border-amber-800">
-                <h3 className="text-lg font-bold text-amber-800 dark:text-amber-400 mb-4">General Conditions</h3>
-                <ul className="space-y-3 text-sm text-gray-700 dark:text-gray-300">
+             <div className="bg-amber-50 dark:bg-slate-800/50 p-8 rounded-2xl border border-amber-100 dark:border-slate-700 reveal-on-scroll">
+                <h3 className="text-xl font-bold text-amber-800 dark:text-amber-400 mb-6 flex items-center gap-2">
+                    <CheckCircle size={24} /> General Terms & Conditions
+                </h3>
+                <ul className="space-y-4">
                     {CONDITIONS.map((cond, idx) => (
-                        <li key={idx} className="flex items-start gap-3">
-                            <span className="font-bold text-amber-600 dark:text-amber-500 shrink-0 bg-amber-100 dark:bg-amber-900 rounded-full w-6 h-6 flex items-center justify-center text-xs">{idx + 1}</span>
-                            <span className="pt-0.5">{cond}</span>
+                        <li key={idx} className="flex items-start gap-4">
+                            <span className="font-black text-amber-600 dark:text-amber-500 shrink-0 bg-white dark:bg-slate-700 rounded-xl w-8 h-8 flex items-center justify-center text-xs shadow-sm border border-amber-100 dark:border-slate-600">{idx + 1}</span>
+                            <span className="pt-1 text-sm text-gray-700 dark:text-gray-300 leading-relaxed">{cond}</span>
                         </li>
                     ))}
                 </ul>
