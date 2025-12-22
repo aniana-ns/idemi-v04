@@ -136,7 +136,7 @@ const ServiceCard: React.FC<ServiceCardProps> = ({ service }) => {
         )}
         
         {/* Floating Icon Badge */}
-        <div className="absolute top-4 right-4 z-30 bg-white/90 dark:bg-gray-800/90 backdrop-blur-md p-2.5 rounded-xl text-primary dark:text-blue-400 shadow-lg border border-white/20 dark:border-gray-600 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3">
+        <div className="absolute top-4 right-4 z-30 bg-white/90 dark:bg-gray-800/90 backdrop-blur-md p-2.5 rounded-xl text-primary dark:text-blue-400 shadow-lg border border-white/20 dark:border-gray-600 transition-transform duration-300 group-hover:scale-110">
           {iconMap[service.iconName] || <Settings size={20} aria-hidden="true" />}
         </div>
       </div>
@@ -173,4 +173,3 @@ const ServiceCard: React.FC<ServiceCardProps> = ({ service }) => {
 };
 
 export default ServiceCard;
-
