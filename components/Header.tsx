@@ -1,6 +1,7 @@
+
 import React, { useState, useEffect, useRef, KeyboardEvent } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Menu, X, Moon, Sun, ChevronDown, ChevronRight, Search, Globe } from 'lucide-react';
+import { Menu, X, Moon, Sun, ChevronDown, ChevronRight, Search, Globe, ArrowRight, Sparkles } from 'lucide-react';
 import { useAccessibility } from '../lib/AccessibilityContext';
 import { SEARCH_INDEX } from '../constants';
 import { SearchItem } from '../types';
@@ -705,7 +706,6 @@ const Header: React.FC = () => {
             </div>
         </div>
 
-        {/* ... (Certification bar and Mobile menu remain similar) ... */}
         <div className="bg-gray-100 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 transition-colors duration-200 relative z-[98]">
             <button 
             onClick={() => setIsCertInfoOpen(!isCertInfoOpen)}
@@ -737,51 +737,88 @@ const Header: React.FC = () => {
             </div>
         </div>
 
-        <div className={`absolute top-full left-0 w-full bg-white/95 dark:bg-gray-900/95 backdrop-blur-md shadow-xl border-t border-gray-200 dark:border-gray-800 transition-all duration-300 origin-top ${isSearchOpen ? 'opacity-100 visible scale-y-100' : 'opacity-0 invisible scale-y-0'} z-[99]`}>
-            <div className="container mx-auto px-4 py-6">
-            <form onSubmit={handleSearch} className="relative max-w-3xl mx-auto">
-                <div className="relative flex items-center group">
-                    <Search className="absolute left-4 text-gray-400 group-focus-within:text-primary" size={20} aria-hidden="true" />
+        <div className={`absolute top-full left-0 w-full bg-white/95 dark:bg-gray-950 backdrop-blur-md shadow-2xl border-t border-gray-200 dark:border-gray-800 transition-all duration-300 origin-top ${isSearchOpen ? 'opacity-100 visible scale-y-100' : 'opacity-0 invisible scale-y-0'} z-[99]`}>
+            <div className="container mx-auto px-4 py-4 md:py-6">
+            <form onSubmit={handleSearch} className="relative max-w-4xl mx-auto group">
+                {/* Glowing Background Effect for AI Feel */}
+                <div className="absolute -inset-1 bg-gradient-to-r from-primary/20 via-blue-500/20 to-primary/20 rounded-full blur-xl opacity-0 group-focus-within:opacity-100 transition-opacity duration-500"></div>
+                
+                <div className="relative flex items-center bg-white dark:bg-gray-900 rounded-full border border-gray-200 dark:border-gray-800 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.1)] group-focus-within:border-primary/50 group-focus-within:shadow-[0_10px_50px_-12px_rgba(30,58,138,0.3)] transition-all p-1 pr-2">
+                    <div className="pl-5 pr-3 text-gray-400 group-focus-within:text-primary transition-colors">
+                        <Sparkles size={20} className="animate-pulse" />
+                    </div>
+                    
                     <input
                     ref={searchInputRef}
                     type="text"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     placeholder="Search for services, training, documents..."
-                    className="w-full pl-12 pr-12 py-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all shadow-sm"
+                    className="w-full py-2 text-base md:text-lg font-medium bg-transparent text-gray-900 dark:text-white outline-none placeholder:text-gray-400"
                     autoComplete="off"
                     aria-label="Search Query"
                     />
-                    <button 
-                    type="button" 
-                    onClick={() => { setIsSearchOpen(false); setSuggestions([]); }}
-                    className="absolute right-4 text-gray-400 hover:text-red-500 transition-colors"
-                    aria-label="Close search"
-                    >
-                    <X size={20} />
-                    </button>
+                    
+                    <div className="flex items-center gap-2">
+                        {searchQuery && (
+                            <button 
+                            type="button" 
+                            onClick={() => setSearchQuery('')}
+                            className="p-1.5 text-gray-400 hover:text-red-500 transition-colors"
+                            aria-label="Clear search"
+                            >
+                                <X size={18} />
+                            </button>
+                        )}
+                        
+                        <button 
+                            type="submit"
+                            className="flex items-center gap-2 px-5 py-2 bg-gradient-to-r from-primary to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white rounded-full font-bold transition-all shadow-lg active:scale-95 group/btn text-sm"
+                            aria-label="Submit Search"
+                        >
+                            <span className="hidden sm:inline">Search</span>
+                            <Search size={18} className="group-hover/btn:scale-110 transition-transform" />
+                        </button>
+                        
+                        <button 
+                            type="button" 
+                            onClick={() => { setIsSearchOpen(false); setSuggestions([]); }}
+                            className="p-1.5 text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
+                            aria-label="Close search panel"
+                        >
+                            <X size={20} />
+                        </button>
+                    </div>
                 </div>
 
                 {suggestions.length > 0 && (
-                <div className="absolute top-full left-0 w-full mt-2 bg-white dark:bg-gray-800 rounded-xl shadow-2xl border border-gray-200 dark:border-gray-700 overflow-hidden z-50">
+                <div className="absolute top-full left-0 w-full mt-3 bg-white dark:bg-gray-900 rounded-[2rem] shadow-2xl border border-gray-100 dark:border-gray-800 overflow-hidden z-50 animate-scale-up origin-top">
+                    <div className="px-6 py-2.5 bg-gray-50/50 dark:bg-gray-800/50 border-b border-gray-100 dark:border-gray-800">
+                        <span className="text-[9px] font-black uppercase tracking-widest text-gray-400">Recommended Results</span>
+                    </div>
                     <ul role="listbox">
                     {suggestions.map((item, index) => (
                         <li key={index} role="option" aria-selected={false}>
                         <button
                             type="button"
                             onClick={() => handleSuggestionClick(item.path)}
-                            className="w-full text-left px-6 py-4 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors border-b border-gray-100 dark:border-gray-700/50 last:border-none flex justify-between items-center group"
+                            className="w-full text-left px-8 py-4 hover:bg-blue-50/50 dark:hover:bg-blue-900/10 transition-colors border-b border-gray-50 dark:border-gray-800/50 last:border-none flex justify-between items-center group/item"
                         >
-                            <div>
-                            <p className="font-semibold text-gray-900 dark:text-white text-sm group-hover:text-primary dark:group-hover:text-blue-400">{item.title}</p>
-                            <p className="text-xs text-gray-500 dark:text-gray-400 mt-1 truncate max-w-md">{item.desc}</p>
+                            <div className="min-w-0">
+                                <p className="font-bold text-gray-900 dark:text-white text-sm group-hover/item:text-primary dark:group-hover:text-blue-400">{item.title}</p>
+                                <p className="text-[11px] text-gray-500 dark:text-gray-400 mt-0.5 truncate max-w-lg">{item.desc}</p>
                             </div>
-                            <span className="text-[10px] font-bold px-2 py-1 rounded bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 uppercase tracking-wide">{item.type}</span>
+                            <div className="flex items-center gap-3 shrink-0 ml-4">
+                                <span className="text-[8px] font-black px-2 py-0.5 rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400 uppercase tracking-wider border border-gray-200 dark:border-gray-700">{item.type}</span>
+                                <ChevronRight size={16} className="text-gray-300 group-hover/item:text-primary dark:group-hover:text-blue-400 transition-colors" />
+                            </div>
                         </button>
                         </li>
                     ))}
-                    <li className="bg-gray-50 dark:bg-gray-900/50 p-3 text-center">
-                        <button type="submit" className="text-xs text-primary dark:text-blue-400 font-bold hover:underline uppercase tracking-wide">View all results</button>
+                    <li className="bg-gray-50/50 dark:bg-gray-800/50 p-4 text-center">
+                        <button type="submit" className="text-xs text-primary dark:text-blue-400 font-black hover:underline uppercase tracking-widest flex items-center justify-center gap-2 mx-auto transition-transform hover:scale-105">
+                            Show all results for "{searchQuery}" <ArrowRight size={14} />
+                        </button>
                     </li>
                     </ul>
                 </div>
@@ -799,18 +836,22 @@ const Header: React.FC = () => {
                 : 'opacity-0 invisible -translate-y-2 pointer-events-none'
             }`}
         >
-            {/* Mobile menu content remains same as original, keeping it concise */}
-            <div className="px-2 mb-2">
-            <form onSubmit={handleSearch} className="relative">
+            <div className="px-2 mb-4">
+            <form onSubmit={handleSearch} className="relative flex items-center p-1 bg-gray-100 dark:bg-gray-800 rounded-full">
+                <div className="pl-4 text-gray-400">
+                    <Sparkles size={18} />
+                </div>
                 <input
                     type="text"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    placeholder="Search..."
-                    className="w-full pl-10 pr-4 py-2.5 rounded-lg border border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary outline-none"
+                    placeholder="Search IDEMI..."
+                    className="w-full pl-3 pr-12 py-2.5 bg-transparent text-gray-900 dark:text-white outline-none text-sm font-medium"
                     aria-label="Mobile Search"
                 />
-                <Search className="absolute left-3 top-3 text-gray-400" size={18} aria-hidden="true" />
+                <button type="submit" className="absolute right-1 p-2 bg-primary text-white rounded-full shadow-lg active:scale-95">
+                    <Search size={16} />
+                </button>
             </form>
             </div>
 
