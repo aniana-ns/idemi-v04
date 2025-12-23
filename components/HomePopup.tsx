@@ -46,7 +46,7 @@ const HomePopup: React.FC = () => {
     setIsMounted(true);
     let closeTimer: ReturnType<typeof setTimeout>;
 
-    // Auto-open after a slight delay
+    // Auto-open after 5 seconds delay (let website load first)
     const openTimer = setTimeout(() => {
       setIsOpen(true);
 
@@ -54,7 +54,7 @@ const HomePopup: React.FC = () => {
       closeTimer = setTimeout(() => {
         setIsOpen(false);
       }, 5000);
-    }, 2000);
+    }, 5000);
 
     return () => {
       clearTimeout(openTimer);
