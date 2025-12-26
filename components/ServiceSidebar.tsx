@@ -51,7 +51,7 @@ const SERVICE_MENU = [
     ]
   },
   {
-    title: 'Training Programs',
+    title: 'Training & Placements',
     path: '/training',
     items: [
       { label: 'Introduction', path: '/training/introduction' },
@@ -62,17 +62,11 @@ const SERVICE_MENU = [
       { label: 'Short / Medium Term Courses', path: '/training/short-term-courses' },
       { label: 'Professional Courses', path: '/training/professional-courses' },
       { label: 'Sponsored Programmes', path: '/training/schemes/day-nulm' },
-    ]
-  },
-  {
-    title: 'Jobs / Placement',
-    path: '/training/job-openings',
-    items: [
-        { label: 'Job Openings', path: '/training/job-openings' },
-        { label: 'Job Fair', path: '/jobfair' },
-        { label: 'Recruiter Interest', path: '/training/recruiter-enquiry' },
-        { label: 'Alumni Registration', path: '/alumni-registration' },
-        { label: 'Student Registration', path: '/student-registration' },
+      { label: 'Job Openings', path: '/training/job-openings' },
+      { label: 'Job Fair', path: '/jobfair' },
+      { label: 'Recruiter Interest', path: '/training/recruiter-enquiry' },
+      { label: 'Alumni Registration', path: '/alumni-registration' },
+      { label: 'Student Registration', path: '/student-registration' },
     ]
   },
   {
