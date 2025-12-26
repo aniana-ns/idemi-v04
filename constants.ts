@@ -134,6 +134,11 @@ export const SEARCH_INDEX: SearchItem[] = [
   { title: 'Hostel', path: '/services/hostel', type: 'Service', desc: 'Student accommodation facilities.' },
   { title: 'Auditorium', path: '/services/auditorium', type: 'Service', desc: 'Conference and event facilities.' },
 
+  // --- PLACEMENTS ---
+  { title: 'Job Openings', path: '/training/job-openings', type: 'Page', desc: 'Latest job openings for IDEMI students.' },
+  { title: 'Recruiter Interest', path: '/training/recruiter-enquiry', type: 'Page', desc: 'Form for companies interested in recruiting IDEMI trainees.' },
+  { title: 'Placement Cell', path: '/training/job-openings', type: 'Page', desc: 'Student placement support and industry connections.' },
+
   // --- GOVERNMENT SCHEMES ---
   { title: 'PMKVY Scheme', path: '/schemes/pmkvy', type: 'Scheme', desc: 'Pradhan Mantri Kaushal Vikas Yojana training.' },
   { title: 'National SC-ST Hub', path: '/schemes/sc-st-hub', type: 'Scheme', desc: 'Support for SC/ST entrepreneurs.' },
@@ -174,4 +179,3 @@ export const SEARCH_INDEX: SearchItem[] = [
   { title: 'Annual Reports', path: '/downloads/annual-reports', type: 'Download', desc: 'Financial performance reports.' },
   { title: 'Procurement Policy', path: '/downloads/procurement-policy', type: 'Download', desc: 'Guidelines for procurement.' },
 ];
-
