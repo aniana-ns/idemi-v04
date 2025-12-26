@@ -91,18 +91,26 @@ const MENU_ITEMS: MenuItem[] = [
         ]
       },
       {
-        label: 'Testing Services',
+        label: 'Training Services',
         children: [
-          { label: 'Safety Testing', path: '/services/testing/safety' },
-          { label: 'EMI-EMC Testing', path: '/services/testing/emi_emc' },
-          { label: 'Environmental Testing', path: '/services/testing/environmental' },
-          { label: 'Type Testing', path: '/services/testing/type' },
-          { label: 'LED Testing', path: '/services/testing/led' },
-          { label: 'Monoblock Pumpset Testing', path: '/services/testing/monoblock_pumpset' },
-          { label: 'Centrifugal Pump Testing', path: '/services/testing/centrifugal_pump' },
-          { label: 'Steam Boiler / LOCA Test Facility', path: '/services/testing/loca-test-facility' },
-          { label: 'TEC - Accreditation', path: `/view-document?url=https://idemi.org/assets/uploads/TEC%20accreditation.pdf&title=TEC Accreditation` },
-          { label: 'TEC - Test Fees Schedule', path: `/view-document?url=https://idemi.org/assets/uploads/TEC%20-%20Test%20Fee%20Schedule.pdf&title=TEC Test Fees Schedule` },
+          { label: 'Introduction', path: '/training/introduction' },
+          { label: 'Online Training Courses', path: '/training/online-training' },
+          { label: 'Long Term Courses', path: '/training/post-graduate-post-diploma' },
+          { label: 'AICTE Approved Diploma Courses', path: '/training/aicte' },
+          { label: 'Admission Schedule 2025', path: '/training/aicte/schedule' },
+          { label: 'Short / Medium Term Courses', path: '/training/short-term-courses' },
+          { label: 'Professional Courses', path: '/training/professional-courses' },
+          { label: 'Sponsored Programmes', path: '/training/schemes/day-nulm' },
+        ]
+      },
+      {
+        label: 'Jobs / Placement',
+        children: [
+          { label: 'Job Openings', path: '/training/job-openings' },
+          { label: 'Job Fair', path: '/jobfair' },
+          { label: 'Recruiter Interest', path: '/training/recruiter-enquiry' },
+          { label: 'Alumni Registration', path: '/alumni-registration' },
+          { label: 'Student Registration', path: '/student-registration' },
         ]
       },
       {
@@ -158,7 +166,16 @@ const MENU_ITEMS: MenuItem[] = [
             { label: 'Short / Medium Term Courses', path: '/training/short-term-courses' },
             { label: 'Professional Courses', path: '/training/professional-courses' },
             { label: 'Sponsored Programmes', path: '/training/schemes/day-nulm' },
+          ]
+      },
+      {
+          label: 'Jobs / Placement',
+          children: [
+            { label: 'Job Openings', path: '/training/job-openings' },
             { label: 'Job Fair', path: '/jobfair' },
+            { label: 'Recruiter Interest', path: '/training/recruiter-enquiry' },
+            { label: 'Alumni Registration', path: '/alumni-registration' },
+            { label: 'Student Registration', path: '/student-registration' },
           ]
       },
       {
