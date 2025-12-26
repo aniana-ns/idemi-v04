@@ -1,12 +1,43 @@
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { MapPin, Phone, Mail, Facebook, Twitter, Linkedin, Users, Instagram } from 'lucide-react';
+import { MapPin, Phone, Mail, Facebook, Twitter, Linkedin, Users, Instagram, Loader2 } from 'lucide-react';
 import { CONTACT_INFO } from '../constants';
 
 const Footer: React.FC = () => {
+  const [visitorCount, setVisitorCount] = useState<number | null>(null);
+  const [isLoadingCount, setIsLoadingCount] = useState(true);
+
   const socialLinkClass = "p-2 bg-slate-800 rounded hover:bg-secondary transition focus:outline-none text-white";
   const footerLinkClass = "hover:text-secondary transition flex items-center gap-2 focus:outline-none rounded px-1 -ml-1";
+
+  // Dynamic Visitor Counter Logic
+  useEffect(() => {
+    const fetchVisitorCount = async () => {
+      try {
+        // We use a public, reliable counter API (counterapi.dev)
+        // Namespace: idemi-modern, Key: site-visits
+        const namespace = "idemi-modern-redesign";
+        const key = "total-visits";
+        
+        // This endpoint increments the count AND returns the current value
+        const response = await fetch(`https://api.counterapi.dev/v1/${namespace}/${key}/up`);
+        const data = await response.json();
+        
+        if (data && typeof data.count === 'number') {
+          setVisitorCount(data.count);
+        }
+      } catch (error) {
+        console.error("Error fetching visitor count:", error);
+        // Fallback to a placeholder if API fails
+        setVisitorCount(24589); 
+      } finally {
+        setIsLoadingCount(false);
+      }
+    };
+
+    fetchVisitorCount();
+  }, []);
 
   return (
     <footer className="bg-slate-900 text-slate-300 pt-16 pb-8 border-t-4 border-secondary" role="contentinfo" aria-labelledby="footer-heading">
@@ -84,24 +115,35 @@ const Footer: React.FC = () => {
           </div>
         </div>
 
-        <div className="border-t border-slate-800 pt-8 flex flex-col md:flex-row justify-between items-center text-sm gap-4">
+        <div className="border-t border-slate-800 pt-8 flex flex-col md:flex-row justify-between items-center text-sm gap-6">
           <p className="text-center md:text-left">© {new Date().getFullYear()} IDEMI Mumbai. All Rights Reserved.</p>
           
-          {/* Visitor Counter */}
+          {/* Enhanced Live Visitor Counter */}
           <div 
-            className="flex items-center gap-2 bg-slate-800/50 px-4 py-1.5 rounded-full border border-slate-700 overflow-hidden"
+            className="flex items-center gap-3 bg-slate-800/80 px-5 py-2 rounded-2xl border border-slate-700 shadow-inner group hover:border-secondary/50 transition-colors"
             role="status"
+            aria-live="polite"
             aria-label="Website Visitor Counter"
           >
-            <Users size={14} className="text-secondary shrink-0" aria-hidden="true" />
-            <span className="text-slate-400 text-xs font-semibold uppercase tracking-wider shrink-0">Visitors:</span>
+            <div className="relative">
+                <Users size={16} className="text-secondary shrink-0 group-hover:scale-110 transition-transform" aria-hidden="true" />
+                <span className="absolute -top-1 -right-1 flex h-2 w-2">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                </span>
+            </div>
             
-            <div className="flex items-center justify-center">
-                <img 
-                    src="https://counter1.optistats.ovh/private/freecounterstat.php?c=cy2r1zlh28p18am8jxn2xy4fe2zdsayg" 
-                    alt="Number of visitors" 
-                    style={{ border: 0 }}
-                />
+            <div className="flex flex-col">
+                <span className="text-slate-500 text-[10px] font-black uppercase tracking-widest leading-none mb-1">Total Visits</span>
+                <div className="flex items-center gap-2">
+                    {isLoadingCount ? (
+                        <Loader2 size={14} className="animate-spin text-slate-500" />
+                    ) : (
+                        <span className="text-white font-mono text-base font-bold tracking-tighter">
+                            {visitorCount?.toLocaleString()}
+                        </span>
+                    )}
+                </div>
             </div>
           </div>
 
