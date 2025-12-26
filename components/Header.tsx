@@ -104,16 +104,16 @@ const MENU_ITEMS: MenuItem[] = [
           { label: 'Enquiry Form', path: '/training/enquiry' },
           { label: 'SC-ST Beneficiaries', path: '/training/sc_st_beneficiaries' },
           { label: 'AICTE Mandatory Disclosure', path: `/view-document?url=https://idemi.org/assets/uploads/Mandatory_Disclosure.pdf&title=AICTE Mandatory Disclosure` },
-        ]
-      },
-      {
-        label: 'Jobs / Placement',
-        children: [
-          { label: 'Job Openings', path: '/training/job-openings' },
-          { label: 'Job Fair', path: '/jobfair' },
-          { label: 'Recruiter Interest', path: '/training/recruiter-enquiry' },
-          { label: 'Alumni Registration', path: '/alumni-registration' },
-          { label: 'Student Registration', path: '/student-registration' },
+          {
+            label: 'Jobs / Placement',
+            children: [
+              { label: 'Job Openings', path: '/training/job-openings' },
+              { label: 'Job Fair', path: '/jobfair' },
+              { label: 'Recruiter Interest', path: '/training/recruiter-enquiry' },
+              { label: 'Alumni Registration', path: '/alumni-registration' },
+              { label: 'Student Registration', path: '/student-registration' },
+            ]
+          },
         ]
       },
       {
@@ -150,16 +150,16 @@ const MENU_ITEMS: MenuItem[] = [
             { label: 'Short / Medium Term Courses', path: '/training/short-term-courses' },
             { label: 'Professional Courses', path: '/training/professional-courses' },
             { label: 'Sponsored Programmes', path: '/training/schemes/day-nulm' },
-          ]
-      },
-      {
-          label: 'Jobs / Placement',
-          children: [
-            { label: 'Job Openings', path: '/training/job-openings' },
-            { label: 'Job Fair', path: '/jobfair' },
-            { label: 'Recruiter Interest', path: '/training/recruiter-enquiry' },
-            { label: 'Alumni Registration', path: '/alumni-registration' },
-            { label: 'Student Registration', path: '/student-registration' },
+            {
+                label: 'Jobs / Placement',
+                children: [
+                  { label: 'Job Openings', path: '/training/job-openings' },
+                  { label: 'Job Fair', path: '/jobfair' },
+                  { label: 'Recruiter Interest', path: '/training/recruiter-enquiry' },
+                  { label: 'Alumni Registration', path: '/alumni-registration' },
+                  { label: 'Student Registration', path: '/student-registration' },
+                ]
+            },
           ]
       },
       {
