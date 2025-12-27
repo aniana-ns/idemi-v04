@@ -137,7 +137,6 @@ const SITEMAP_DATA = [
       { label: 'NSQF Compliant', path: '/schemes/nsqf' },
       { label: 'Kiman Kaushalya', path: '/schemes/kiman-kaushalya' },
       { label: 'MeitY Dashboard', path: '/meity/dashboard' },
-      { label: 'COVID-19 Products', path: '/covid19_products' },
     ]
   },
   {
