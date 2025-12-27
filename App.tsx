@@ -1,4 +1,3 @@
-
 import React, { Suspense, lazy } from 'react';
 import { HashRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
@@ -11,6 +10,7 @@ const Home = lazy(() => import('./pages/Home'));
 const About = lazy(() => import('./pages/About'));
 const Services = lazy(() => import('./pages/Services'));
 const Training = lazy(() => import('./pages/Training'));
+const Faculty = lazy(() => import('./pages/Faculty'));
 const Contact = lazy(() => import('./pages/Contact'));
 const ExtensionCentres = lazy(() => import('./pages/ExtensionCentres'));
 const SearchResults = lazy(() => import('./pages/SearchResults'));
@@ -21,7 +21,7 @@ const NotFound = lazy(() => import('./pages/NotFound'));
 const Newsletter = lazy(() => import('./pages/Newsletter'));
 const PlacementPortal = lazy(() => import('./pages/PlacementPortal'));
 const RecruiterEnquiry = lazy(() => import('./pages/RecruiterEnquiry'));
-const Faculty = lazy(() => import('./pages/Faculty'));
+const FacultyPage = lazy(() => import('./pages/Faculty'));
 
 // Decoupled Gallery Pages
 const GalleryMain = lazy(() => import('./pages/GalleryMain'));
@@ -44,7 +44,6 @@ const NationalAssociations = lazy(() => import('./pages/NationalAssociations'));
 const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
 const Terms = lazy(() => import('./pages/Terms'));
 const JobFair = lazy(() => import('./pages/JobFair'));
-const CovidProducts = lazy(() => import('./pages/CovidProducts'));
 const MeitySchemes = lazy(() => import('./pages/MeitySchemes'));
 const Careers = lazy(() => import('./pages/Careers'));
 const Sitemap = lazy(() => import('./pages/Sitemap'));
@@ -283,7 +282,6 @@ const App: React.FC = () => {
                 {/* --- SCHEMES --- */}
                 <Route path="/meity/dashboard" element={<MeitySchemes />} />
                 <Route path="/meity/testimonials" element={<MeitySchemes />} />
-                <Route path="/covid19_products" element={<CovidProducts />} />
                 
                 <Route path="/schemes/pmkvy" element={<PMKVYScheme />} />
                 <Route path="/training/schemes/pmkvy" element={<PMKVYScheme />} />
