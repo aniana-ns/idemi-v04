@@ -68,10 +68,12 @@ export const SEARCH_INDEX: SearchItem[] = [
   { title: 'Shri Kundan Khandare', path: '/whos-who', type: 'Person', desc: 'Senior Technical Assistant, Pressure Calibration.' },
   { title: 'Shri Rajesh Birari', path: '/whos-who', type: 'Person', desc: 'Junior Field Officer, Store & Purchase.' },
   { title: 'Smt. V. V. Kamath', path: '/whos-who', type: 'Person', desc: 'Office Superintendent, Administration.' },
-  { title: 'Mr. Yogesh Adsul', path: '/services/eos-formiga', type: 'Person', desc: 'Contact for 3D Printing and LOCA Testing.' },
-  { title: 'Mr. Vishal Angre', path: '/training/post-graduate-post-diploma', type: 'Person', desc: 'Contact for Animation Courses.' },
-  { title: 'Mr. Kapil Chourasiya', path: '/training/post-graduate-post-diploma', type: 'Person', desc: 'Contact for Mechatronics Courses.' },
-  { title: 'Mr. Sagar Nevage', path: '/training/post-graduate-post-diploma', type: 'Person', desc: 'Contact for Mechanical/Tool Design Courses.' },
+  
+  // --- FACULTY ---
+  { title: 'Mr. Sagar Nevage', path: '/faculty', type: 'Person', desc: 'Expert in Mechanical & Tool Design, NX CAD/CAM.' },
+  { title: 'Mr. Kapil Chourasiya', path: '/faculty', type: 'Person', desc: 'Expert in Mechatronics, PLC Programming, and Industrial Robotics.' },
+  { title: 'Mr. Vishal Angre', path: '/faculty', type: 'Person', desc: 'Senior Creative Faculty for 3D Animation & VFX.' },
+  { title: 'Mr. Nilesh Sharma', path: '/faculty', type: 'Person', desc: 'Expert Trainer for Electronics, IT, and Embedded Systems.' },
 
   // --- FACILITIES & INFRASTRUCTURE ---
   { title: '5-Axis CNC Machine (Hermle C400)', path: '/services/tool-room-infrastructure', type: 'Facility', desc: 'High precision 5-axis milling machine for complex aerospace parts.' },
