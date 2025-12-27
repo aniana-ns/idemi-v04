@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { ChevronRight, Info, ChevronUp, ChevronDown } from 'lucide-react';
@@ -14,7 +13,6 @@ const INFO_MENU = [
   { label: 'Quality Policy (ISO 17025)', path: '/ISO-IEC' },
   { label: 'Quality Policy (ISO 9001)', path: '/ISO-AS9100' },
   { label: "Who's Who", path: '/whos-who' },
-  { label: 'Our Faculty', path: '/faculty' },
   { label: 'Committee', path: '/committee' },
   { label: 'CVO & Vigilance', path: '/vigilance' },
   { label: 'Extension Centres', path: '/extensions' },
