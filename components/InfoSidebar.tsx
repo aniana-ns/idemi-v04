@@ -8,6 +8,7 @@ const INFO_MENU = [
   { label: 'IDEMI At a Glance', path: '/at-glance' },
   { label: 'Vision & Mission', path: '/vision-mission' },
   { label: "Director's Desk", path: '/directors-desk' },
+  { label: 'Our Faculty', path: '/faculty' },
   { label: 'Aerospace Standard (AS9100 Rev.D)', path: '/ISO-AS9100-2016' },
   { label: 'ISO 9001:2015 Certificate', path: '/ISO-9001-2015-Certificate' },
   { label: 'NABL Certificate', path: '/NABL-Certificate' },
@@ -95,4 +96,3 @@ const InfoSidebar: React.FC = () => {
 };
 
 export default InfoSidebar;
-
