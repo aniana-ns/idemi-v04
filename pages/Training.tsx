@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowLeft, BookOpen, CheckCircle, GraduationCap, Briefcase, IndianRupee, Users, ArrowRight } from 'lucide-react';
@@ -151,20 +150,6 @@ const Training: React.FC = () => {
                                 </div>
                             </div>
                         ))}
-                    </div>
-                </div>
-
-                {/* Meet Our Faculty CTA */}
-                <div className="mb-12 p-8 bg-gradient-to-r from-slate-900 to-primary rounded-3xl text-white shadow-xl relative overflow-hidden group reveal-on-scroll">
-                    <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full -mr-32 -mt-32 blur-3xl group-hover:bg-white/10 transition-colors"></div>
-                    <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
-                        <div className="text-center md:text-left">
-                            <h3 className="text-2xl font-black uppercase tracking-tight mb-2">Learn from the best</h3>
-                            <p className="text-blue-100/80 font-medium">Our faculty consists of industry veterans and academic experts dedicated to your growth.</p>
-                        </div>
-                        <Link to="/faculty" className="px-8 py-4 bg-white text-primary font-black uppercase tracking-widest text-xs rounded-2xl hover:bg-secondary hover:text-white transition-all shadow-lg hover:-translate-y-1 flex items-center gap-2 whitespace-nowrap">
-                            Meet Our Faculty <ArrowRight size={16} />
-                        </Link>
                     </div>
                 </div>
 
