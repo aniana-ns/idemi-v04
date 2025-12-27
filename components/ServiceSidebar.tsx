@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { ChevronRight, ChevronDown, ChevronUp, Menu, Briefcase } from 'lucide-react';
@@ -83,7 +82,6 @@ const SERVICE_MENU = [
       { label: 'NBCFDC Schemes', path: '/schemes/nbcfdc' },
       { label: 'BMC Sponsored Training', path: '/schemes/bmc' },
       { label: 'MeitY Dashboard', path: '/meity/dashboard' },
-      { label: 'COVID-19 Products', path: '/covid19_products' },
     ]
   },
   {
