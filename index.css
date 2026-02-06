@@ -1,0 +1,173 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+}
+body {
+  font-family: 'Inter', sans-serif;
+  top: 0px !important;
+}
+
+/* === Global Overrides === */
+/* Removed aggressive wildcard reset that was hiding shadows */
+*:focus {
+  outline: none !important;
+}
+
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* === Custom Utilities === */
+@layer utilities {
+  .text-shadow-sm {
+    text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+  }
+  .text-shadow {
+    text-shadow: 0 2px 4px rgba(0,0,0,0.6);
+  }
+  .text-shadow-lg {
+    text-shadow: 0 4px 12px rgba(0,0,0,0.8);
+  }
+}
+
+/* === Scroll Animations === */
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.5s cubic-bezier(0.5, 0, 0, 1);
+}
+
+.reveal-on-scroll.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.stagger-1 { transition-delay: 50ms; }
+.stagger-2 { transition-delay: 100ms; }
+.stagger-3 { transition-delay: 150ms; }
+.stagger-4 { transition-delay: 200ms; }
+
+/* === Text Gradients === */
+.text-gradient {
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-image: linear-gradient(to right, #1e3a8a, #3b82f6);
+}
+
+.dark .text-gradient {
+  background-image: linear-gradient(to right, #60a5fa, #93c5fd);
+}
+
+/* === Nav Hover Animation === */
+.nav-link {
+  position: relative;
+}
+.nav-link::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: -2px;
+  left: 0;
+  background-color: currentColor;
+  transition: width 0.3s ease-out;
+}
+.nav-link:hover::after {
+  width: 100%;
+}
+
+/* === Marquee Animation === */
+@keyframes marquee {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+.animate-marquee {
+  display: inline-flex;
+  white-space: nowrap;
+  animation: marquee 100s linear infinite; /* Higher Number Slower Movement */
+}
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+/* === Google Translate Custom Styling === */
+.goog-te-banner-frame { display: none !important; }
+body > .skiptranslate { display: none !important; }
+
+.goog-te-gadget {
+    font-family: inherit !important;
+    font-size: 0 !important;
+    color: transparent !important;
+    display: flex !important;
+    align-items: center;
+}
+
+.goog-te-gadget .goog-logo-link, 
+.goog-te-gadget > span {
+    display: none !important;
+}
+
+.goog-te-combo {
+    padding: 4px 8px !important;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 6px !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    color: #4b5563 !important;
+    background-color: white !important;
+    outline: none !important;
+    height: auto !important;
+    cursor: pointer !important;
+    margin: 0 !important;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
+    transition: all 0.2s ease-in-out;
+}
+
+html.dark .goog-te-combo {
+    background-color: #1f2937 !important;
+    border-color: #374151 !important;
+    color: #e5e7eb !important;
+}
+
+#google_translate_element {
+  display: inline-flex;
+  align-items: center;
+  min-height: 28px;
+}
+
+/* === Custom Scrollbar === */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+.dark ::-webkit-scrollbar-thumb {
+  background: #475569;
+}
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #64748b;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.no-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
